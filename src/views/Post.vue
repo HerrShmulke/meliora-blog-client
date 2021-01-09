@@ -107,6 +107,10 @@ export default {
   align-self: flex-start;
 }
 
+.post__chip::before {
+  content: '#';
+}
+
 .post__textarea-container {
   display: flex;
   flex-direction: column;
