@@ -21,7 +21,7 @@
         :key="category.id"
         class="categories__item"
         :class="{ 'categories__item--active': currentCategory === category.name }"
-        @click="currentCategory = category.name"
+        @click="changeCategory(category.name)"
       >
         {{ category.name }}
       </button>
@@ -100,6 +100,11 @@ export default {
       } else {
         this.canScrollLeft = true;
       }
+    },
+
+    changeCategory(category) {
+      this.$emit('changeCategory', category);
+      this.currentCategory = category;
     },
   },
 };

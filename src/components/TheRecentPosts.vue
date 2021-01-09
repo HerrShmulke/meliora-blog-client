@@ -1,10 +1,10 @@
 <template>
   <div class="recent-posts">
     <h1>Recent Posts</h1>
-    <TheCategories class="recent-posts--mb" />
+    <TheCategories class="recent-posts--mb" @changeCategory="changeCategory" />
     <div class="recent-posts__posts">
       <Post
-        v-for="article in articles"
+        v-for="article in filteredArticles"
         :key="article.id"
         :time="article.created_at"
         :title="article.title"
@@ -24,6 +24,7 @@ import Post from '@/components/Post.vue';
 export default {
   data: () => ({
     articles: [],
+    currentCategory: 'All',
   }),
 
   mounted() {
@@ -35,6 +36,25 @@ export default {
         return article;
       });
     });
+  },
+
+  computed: {
+    filteredArticles() {
+      if (this.currentCategory === 'All') return this.articles;
+
+      return this.articles.filter((article) => {
+        for (let i = 0; i < article.Categories.length; ++i)
+          if (article.Categories[i].name === this.currentCategory) return true;
+
+        return false;
+      });
+    },
+  },
+
+  methods: {
+    changeCategory(category) {
+      this.currentCategory = category;
+    },
   },
 
   components: {
